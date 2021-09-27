@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "ds-07-prove-me-its-you",
+  "description": "In this exercise we wanna train to create and verify tokens (=visitor cards) after someone successfully logs into our API.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanshine/ds-07-prove-me-its-you.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathanshine/ds-07-prove-me-its-you/issues"
+  },
+  "homepage": "https://github.com/jonathanshine/ds-07-prove-me-its-you#readme"
+}

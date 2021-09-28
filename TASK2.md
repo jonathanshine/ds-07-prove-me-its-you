@@ -30,8 +30,4 @@ Now we wanna add signups of new users with hashed passwords
 
 Now hide the password field when sending back the user at the end of your signup route.
 
-Do NOT remove the field from your user object (otherwise you lose the password :))
-
-Ever tried to create a copy of an object and excluding some fields?
-Ever tried the "spread rest" trick to do that? In case not: Google will support you :)
 

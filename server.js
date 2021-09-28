@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import createError from "http-errors";
 import cors from "cors";
+import bcrypt from "bcryptjs";
 
 const app = express();
 // --------------------------------------------
@@ -39,10 +40,7 @@ const authenticate = (req, res, next) => {
 
 
 // DUMMY DATA ---------------------------------
-const users = [
-    { username: "Nick", password: "luvjay"},
-    { username: "Jay", password: "luvdaisy"}
-];
+const users = [];
 
 const JWT_SECRET = "mySuperDuperSecret";
 // --------------------------------------------
@@ -58,19 +56,35 @@ app.post("/login", (req, res, next) => {
     const { username, password } = req.body;
     
     try {
-        let userFound = users.find(user => user.username === username && user.password === password);
+        let userFound = users.find(user => user.username === username);
         
         if (!userFound) {
             throw new createError("Login failed");
         } else {
+            const successfulLogin = bcrypt.compareSync( password, userFound.password );
+
+            if(!successfulLogin) {
+                return next( new Error("Passwords do not match"))
+            }
             const token = jwt.sign( userFound, JWT_SECRET, { expiresIn: "30m" })
-            res.cookie("token", token, { httpOnly: true })
+            res.cookie("token", token, { httpOnly: true });
+            delete userFound.password;
             res.json( userFound );
         };
     } catch (error) {
         next( error );
     };
 });
+
+
+app.post("/signup", async (req, res, next) => {
+    const userData = { ...req.body };
+    userData.password = bcrypt.hashSync( userData.password, 10);
+    userData.id = Math.random().toString(36).substr(2, 10);
+
+    users.push(userData);
+    res.json(userData);
+})
 
 
 app.get("/users", authenticate, (req, res) => {

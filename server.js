@@ -3,6 +3,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import createError from "http-errors";
+import cors from "cors";
 
 const app = express();
 // --------------------------------------------
@@ -12,6 +13,11 @@ const app = express();
 app.use( express.json() );
 
 app.use( cookieParser() );
+
+app.use( cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 
 const authenticate = (req, res, next) => {
     
